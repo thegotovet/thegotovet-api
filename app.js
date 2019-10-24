@@ -14,6 +14,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 const mongoUrl = require("./config/config").mongo_url;
+const CorsOptions = require("./config/config").cors_options;
 mongoose
   .connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB Connected with " + mongoUrl))
@@ -21,7 +22,15 @@ mongoose
 
 app.use(passport.initialize());
 app.use(cors({
-  origin: 'https://thegotovet.com'
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+
+    if (CorsOptions.indexOf(origin) === -1) {
+      var msg ="The CORS policy for this site does not allow access from the specified Origin.";
+      return callback(msg, false);
+    }
+    return callback(null, true);
+  }
 }));
 app.use(helmet());
 app.use(logger("dev"));
