@@ -21,7 +21,7 @@ mongoose
 
 app.use(passport.initialize());
 app.use(cors({
-  origin: 'http://thegotovet.com'
+  origin: 'https://thegotovet.com'
 }));
 app.use(helmet());
 app.use(logger("dev"));
