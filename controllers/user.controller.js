@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 const JWT = require('jsonwebtoken');
 const { validationResult } = require("express-validator");
 
-const errorFormatter = ({ location, msg, param}) => {
-    return `${location}[${param}]: ${msg}`;
+const errorFormatter = ({msg}) => {
+    return msg;
 };
 
 const user_controllers = {
@@ -92,11 +92,11 @@ const user_controllers = {
             });
         }
 
-        res.cookie("token", token, { httpOnly: true, secure: true });
         return res.status(200).send({
             status: true,
             msg: "successfully logged in",
-            payload: payload.email
+            payload: payload.email,
+            token
         });
     },
     get_users: async (req, res) => {

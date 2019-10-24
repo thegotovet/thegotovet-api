@@ -9,7 +9,7 @@ var mongoose = require("mongoose");
 var helmet = require("helmet");
 var cors = require("cors");
 
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users'); 
 
 var app = express();
 
@@ -20,7 +20,9 @@ mongoose
   .catch(err => console.log(err));
 
 app.use(passport.initialize());
-app.use(cors());
+app.use(cors({
+  origin: 'http://thegotovet.com'
+}));
 app.use(helmet());
 app.use(logger("dev"));
 app.use(bodyParser.json());
