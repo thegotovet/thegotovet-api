@@ -23,11 +23,14 @@ router.post(
   user_controller.login
 );
 
+router.post("/activate", user_controller.activate);
+
 router.get(
   "/getUsers",
   passport.authenticate("jwt", { session: false }),
   isAdmin,
   user_controller.get_users
 );
+
 
 module.exports = router;
